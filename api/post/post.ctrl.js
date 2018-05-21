@@ -17,7 +17,7 @@ const show = (req, res) => {
 }
 
 const destroy = (req, res) => {
-    Post.remove({ _id: req.params.post_id }, function(err, output){
+    Post.remove({ _id: req.params.id }, function(err, output){
         if(err) return res.status(500).json({ error: "database failure" });
 
         // ( SINCE DELETE OPERATION IS IDEMPOTENT, NO NEED TO SPECIFY )
@@ -45,7 +45,7 @@ const create = (req, res) => {
 }
 
 const update = (req, res) => {
-    Post.update({ _id: req.params.post_id }, { $set: req.body }, function(err, output){
+    Post.update({ _id: req.params.id }, { $set: req.body }, function(err, output){
         if(err) res.status(500).json({ error: 'database failure' });
         console.log(output);
         if(!output.n) return res.status(404).json({ error: 'post not found' });
