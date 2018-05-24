@@ -32,12 +32,14 @@ const Post = new Schema({
     }
 });
 
-const validatePost = (post) => {
+const validatePost = (req) => {
     const schema = {
         title: Joi.string().min(5).max(50).required(),
         content: Joi.string().min(10).required(),
         writer: Joi.string().required()
     }
+
+    return Joi.validate(req, schema)
 }
 
 module.exports = {

@@ -1,5 +1,6 @@
 /* API logic (controller) */
-const Post = require('../../models/post')
+const { Post, validate } = require('../../models/post')
+
 
 const index = async (req, res) => {
     const posts = await Post.find()
@@ -9,7 +10,6 @@ const index = async (req, res) => {
 
 const show = async (req, res) => {
     const post = await Post.findById(req.params.id)
-
     if (!post) return post.status(404).send('The post was not found. :)')
 
     res.send(post)    
@@ -24,9 +24,13 @@ const destroy = async (req, res) => {
 }
 
 const create = async (req, res) => {
+    const { error } = validate(req.body)
+    if (error) return res.status(400).send(error.details[0].message);
+     
     const post = new Post({
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        writer: req.body.writer
     })
 
     await post.save()
@@ -35,10 +39,13 @@ const create = async (req, res) => {
 }
 
 const update = async (req, res) => {
+    const { error } = validate(req.body)
+    if (error) return res.status(400).send(error.details[0].message);
+
     const post = await Post.findByIdAndUpdate(req.params.id, {
         title: req.body.title,
-        content: req.body.content
-    })
+        content: req.body.content,
+    }, { new: true })
 
     if (!post) return post.status(404).send('The post was not found. :)')
     
