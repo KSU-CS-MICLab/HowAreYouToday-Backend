@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const post = require('./api/post')
 const mongoose = require('mongoose')
+const firebase = require("firebase-admin");
+const serviceAccount = require("./serviceAccountKey.json");
 
 app.use(express.json());
 
@@ -19,3 +21,7 @@ db.once('open', function(){
 
 mongoose.connect('mongodb://localhost/test1')
 
+firebase.initializeApp({
+    credential: firebase.credential.cert(serviceAccount)
+});
+  
