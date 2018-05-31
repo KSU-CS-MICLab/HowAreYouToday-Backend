@@ -1,57 +1,56 @@
 /* API logic (controller) */
-const Post = require('../../models/posts')
+const { Post, validate } = require('../../models/post')
+const asyncMiddleware = require('../../middleware/async')
 
-const index = (req, res) => {
-    Post.find(function(err, posts){
-        if(err) return res.status(500).send({error: 'database failure'});
-        res.json(posts);
+const index = asyncMiddleware (async (req, res) => {
+    const posts = await Post.find()
+
+    res.send(posts)
+})
+
+const show = asyncMiddleware (async (req, res) => {
+    const post = await Post.findById(req.params.id)
+    if (!post) return post.status(404).send('The post was not found. :)')
+
+    res.send(post)    
+})
+
+const destroy = asyncMiddleware (async (req, res) => {
+    const post = await Post.findByIdAndRemove(req.params.id)
+
+    if (!post) return post.status(404).send('The post was not found. :)')
+
+    res.send(post)
+})
+
+const create = asyncMiddleware (async (req, res) => {
+    const { error } = validate(req.body)
+    if (error) return res.status(400).send(error.details[0].message);
+     
+    const post = new Post({
+        title: req.body.title,
+        content: req.body.content,
+        writer: req.body.writer
     })
-}
 
-const show = (req, res) => {
-    Post.findOne({_id: req.params.id}, function(err, post){
-        if(err) return res.status(500).json({error: err});
-        if(!post) return res.status(404).json({error: 'post not found'});
-        res.json(post);
-    })
-}
+    await post.save()
 
-const destroy = (req, res) => {
-    Post.remove({ _id: req.params.post_id }, function(err, output){
-        if(err) return res.status(500).json({ error: "database failure" });
+    res.send(post)
+})
 
-        // ( SINCE DELETE OPERATION IS IDEMPOTENT, NO NEED TO SPECIFY )
-        if(!output.result.n) return res.status(404).json({ error: "post not found" });
-        res.json({ message: "post deleted" });
-        
-        res.status(204).end();
-    })
-}
+const update = asyncMiddleware (async (req, res) => {
+    const { error } = validate(req.body)
+    if (error) return res.status(400).send(error.details[0].message);
 
-const create = (req, res) => {
-    const post = new Post();
-    post.title = req.body.title;
-    post.content = req.body.content;
+    const post = await Post.findByIdAndUpdate(req.params.id, {
+        title: req.body.title,
+        content: req.body.content,
+    }, { new: true })
 
-    post.save(function (err) {
-        if (err) {
-            console.error(err);
-            res.json({ result: 0 });
-            return;
-        }
-        res.json({ result: 1 });
-
-    });
-}
-
-const update = (req, res) => {
-    Post.update({ _id: req.params.post_id }, { $set: req.body }, function(err, output){
-        if(err) res.status(500).json({ error: 'database failure' });
-        console.log(output);
-        if(!output.n) return res.status(404).json({ error: 'post not found' });
-        res.json( { message: 'post updated' } );
-    })
-}
+    if (!post) return post.status(404).send('The post was not found. :)')
+    
+    res.send(post)
+})
 
 module.exports = {
     index, show, destroy, create, update,
