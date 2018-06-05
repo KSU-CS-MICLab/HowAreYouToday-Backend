@@ -2,6 +2,7 @@ const error = require('./middleware/error')
 const express = require('express');
 const app = express();
 const post = require('./api/post')
+const comment = require('./api/post/comment')
 const mongoose = require('mongoose')
 // const firebase = require("firebase-admin");
 // const serviceAccount = require("./serviceAccountKey.json");
@@ -9,6 +10,7 @@ const mongoose = require('mongoose')
 app.use(express.json());
 
 app.use('/posts', post);
+app.use('/comments', comment);
 app.use(error)
 
 const port = process.env.PORT || 3000;
