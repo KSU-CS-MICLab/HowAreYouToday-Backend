@@ -1,12 +1,15 @@
 /* Routing */
 const express = require('express');
 const router = express.Router();
-const ctrl = require('./post.ctrl')
+const postCtrl = require('./post.ctrl')
+const commentCtrl = require('./comment/comment.ctrl')
 
-router.get('/', ctrl.index)
-router.get('/:id', ctrl.show)
-router.delete('/:id', ctrl.destroy)
-router.post('/', ctrl.create)
-router.put('/:id', ctrl.update)
+router.get('/', postCtrl.index)
+router.get('/:postId', postCtrl.show)
+router.delete('/:postId', postCtrl.destroy)
+router.post('/', postCtrl.create)
+router.put('/:postId', postCtrl.update)
+router.get('/:postId/comments', commentCtrl.getCommentList)
+router.post('/:postId/comments', commentCtrl.writeComment)
 
 module.exports = router;

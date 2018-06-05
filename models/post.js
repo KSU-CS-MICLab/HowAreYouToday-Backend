@@ -1,12 +1,7 @@
 const Joi = require('joi')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
-
-const Comment = new Schema({
-    createdAt: { type: Date, default: Date.now },
-    username: String, 
-    content: String
-});
+const { commentSchema } = require('./comment')
 
 const Post = new Schema({
     createdAt: { type: Date, default: Date.now },
@@ -17,19 +12,21 @@ const Post = new Schema({
     title: { 
         type: String,
         required: true,
-        minlength: 1,
-        maxlength: 100
+        minlength: 5,
+        maxlength: 50
     },
     content: { 
         type: String,
         required: true,
+        minlength: 10
     },
     likesCount: { type: Number, default: 0 },
     likes: { type: [String], default: [] },
     comments: { 
-        type: [Comment],
+        type: [commentSchema],
         default: []
-    }
+    },
+    commentsCount: { type: Number, default: 0 }
 });
 
 const validatePost = (req) => {
