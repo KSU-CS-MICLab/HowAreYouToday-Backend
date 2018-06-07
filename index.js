@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const post = require('./api/post')
 const comment = require('./api/post/comment')
+const like = require('./api/post/like')
 const mongoose = require('mongoose')
 // const firebase = require("firebase-admin");
 // const serviceAccount = require("./serviceAccountKey.json");
@@ -11,6 +12,7 @@ app.use(express.json());
 
 app.use('/posts', post);
 app.use('/comments', comment);
+app.use('/likes', like);
 app.use(error)
 
 const port = process.env.PORT || 3000;
