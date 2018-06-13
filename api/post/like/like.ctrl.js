@@ -10,14 +10,30 @@
  * 게시물 목록에서 각 게시물에 대한 좋아요 횟수를 표시해야 한다.
  */
 
-const { Comment, validate } = require('../../../models/comment')
-const { Post } = require('../../../models/post')
+const likesUtil = require('../../../utils/likes')
 const asyncMiddleware = require('../../../middleware/async')
 
-const like = asyncMiddleware(async (res, req) => {
+const like = asyncMiddleware(async (req, res) => {
+    await likesUtil.like(req.body.type, req.params.likeId, req.body.uid)
 
+    // TODO: 이미 있는 경우 처리
+    
+    res.status(200).send({"data":"success"})
+})
+
+// const isLiked = asyncMiddleware(async (req, res) => {
+//     let il = await likesUtil.isLiked(req.query.type, req.params.likeId, req.query.uid)
+// })
+
+const unLike = asyncMiddleware(async (req, res) => {
+    let ul = await likesUtil.unLike(req.body.type, req.params.likeId, req.body.uid)
+
+    console.log(ul) // TODO: 계속 false 값만 나오네..
+    ul === 1
+        ? res.status(200).send({"data":"success"})
+        : res.status(400).send("Bad Request")    
 })
 
 module.exports = {
-    like
+    like, unLike
 }

@@ -1,9 +1,10 @@
 /* Routing */
 const express = require('express');
 const router = express.Router();
-const postCtrl = require('./like.ctrl')
+const likeCtrl = require('./like.ctrl')
 
-router.post('/', likeCtrl.like)
-
+router.post('/:likeId', likeCtrl.like)
+// router.get('/:likeId', likeCtrl.isLiked)
+router.delete('/:likeId', likeCtrl.unLike)
 
 module.exports = router;

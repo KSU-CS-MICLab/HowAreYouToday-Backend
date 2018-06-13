@@ -20,8 +20,6 @@ const Post = new Schema({
         required: true,
         minlength: 10
     },
-    likesCount: { type: Number, default: 0 },
-    likes: { type: [String], default: [] },
     comments: { 
         type: [commentSchema],
         default: []
