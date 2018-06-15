@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "nodemon ./src/index.js"
+  },
   "dependencies": {
     "express": "^4.16.3",
     "joi": "^13.3.0",
-    "mongoose": "^5.1.1"
+    "mongoose": "^5.1.1",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "nodemon": "^1.17.5"

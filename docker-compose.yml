@@ -1,0 +1,44 @@
+version: "3.5"
+services:
+  server:
+    container_name: how2day_server
+    build: . # Dockerfile이 위치한 경로
+    ports:
+      - "3030:3030" # 연결할 포트
+    environment: # 환경변수 설정
+      - NODE_PATH=src
+      - DB_HOST=how2day_mongo
+      - DB=how2day
+      - REDIS_PORT=6379
+      - REDIS_HOST=how2day_redis
+    networks:
+      - backend
+
+  mongodb:
+    container_name: how2day_mongo
+    image: mvertes/alpine-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo:/data/db
+    networks:
+      - backend
+  
+  redis:
+    container_name: how2day_redis
+    image: redis:4.0.8-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data/redis
+    restart: always
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  mongo:
+  redis:
