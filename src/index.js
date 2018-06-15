@@ -15,17 +15,16 @@ app.use('/comments', comment);
 app.use('/likes', like);
 app.use(error)
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3030;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
 
 const db = mongoose.connection
+mongoose.connect(`mongodb://${process.env.DB_HOST || 'localhost'}:27017/${process.env.DB}`)
 db.on('error', console.error)
 db.once('open', function(){
     // CONNECTED TO MONGODB SERVER
     console.log("Connected to mongod server")
 })
-
-mongoose.connect('mongodb://localhost/test1')
 
 // firebase.initializeApp({
     // credential: firebase.credential.cert(serviceAccount)

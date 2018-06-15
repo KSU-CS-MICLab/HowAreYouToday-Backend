@@ -56,7 +56,7 @@ const getCountList = (type, idList) => {
     for (const id of idList) {
         countList.push(scardAsync(`${t}:${id}`))
     }
-    console.log(`countList: ${countList}`)
+    
     return countList
 }
 

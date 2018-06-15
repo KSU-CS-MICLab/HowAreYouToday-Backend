@@ -7,7 +7,11 @@ const redis = require('redis');
 
 
 module.exports = (function(){
-  const client = new redis.createClient();
+  const client = new redis.createClient(  
+    process.env.REDIS_PORT || 6379,
+    process.env.REDIS_HOST || 'localhost'
+  );
+  
   return {
     client
   };
