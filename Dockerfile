@@ -1,6 +1,7 @@
 # alpine 버전은 node.js 공식 이미지보다 몇 배나 가볍습니다.
 # 6xx mb vs 13x mb
 FROM node:8.11-alpine
+MAINTAINER Seunguk Lee <lsy931106@gmail.com>
 
 # nodemon 설치
 RUN yarn global add nodemon
