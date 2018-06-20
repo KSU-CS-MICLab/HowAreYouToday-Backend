@@ -5,11 +5,12 @@ const post = require('./api/post')
 const comment = require('./api/post/comment')
 const like = require('./api/post/like')
 const mongoose = require('mongoose')
+const cors = require('cors')
 // const firebase = require("firebase-admin");
 // const serviceAccount = require("./serviceAccountKey.json");
 
 app.use(express.json());
-
+app.use(cors())
 app.use('/posts', post);
 app.use('/comments', comment);
 app.use('/likes', like);
