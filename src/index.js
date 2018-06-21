@@ -6,12 +6,14 @@ const comment = require('./api/post/comment')
 const like = require('./api/post/like')
 const login = require('./api/login')
 const mongoose = require('mongoose')
+const firebaseAuth = require('./middleware/auth')
 const cors = require('cors')
-// const firebase = require("firebase-admin");
-// const serviceAccount = require("./serviceAccountKey.json");
+const firebase = require("firebase-admin");
+const serviceAccount = require("./serviceAccountKey.json");
 
 app.use(express.json());
 app.use(cors())
+app.use(firebaseAuth)
 app.use('/posts', post);
 app.use('/comments', comment);
 app.use('/likes', like);
@@ -29,7 +31,7 @@ db.once('open', function(){
     console.log("Connected to mongod server")
 })
 
-// firebase.initializeApp({
-    // credential: firebase.credential.cert(serviceAccount)
-// });
+firebase.initializeApp({
+    credential: firebase.credential.cert(serviceAccount)
+});
   
