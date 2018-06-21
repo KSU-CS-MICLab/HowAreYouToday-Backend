@@ -14,3 +14,7 @@ const login = asyncMiddleware (async (req, res) => {
 
     res.send({'data':'success'})
 })
+
+module.exports = {
+    login
+}
