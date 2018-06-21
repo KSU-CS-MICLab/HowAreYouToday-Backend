@@ -13,15 +13,15 @@ const accountSchema = new Schema({
     },
     calendar: {
         beginDate: {
-            type: Date,
+            type: Array,
             default: []
         },
         endDate: {
-            type: Date,
+            type: Array,
             default: []
         },
         pillsDate: {
-            type: Date,
+            type: Array,
             default: []
         }
     }
