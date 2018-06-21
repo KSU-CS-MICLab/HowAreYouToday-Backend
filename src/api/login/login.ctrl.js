@@ -9,7 +9,7 @@ const login = asyncMiddleware (async (req, res) => {
             uid: req.user.uid,
             email: req.user.email
         })
-        await Account.save()
+        await account.save()
     }
 
     res.send({'data':'success'})
