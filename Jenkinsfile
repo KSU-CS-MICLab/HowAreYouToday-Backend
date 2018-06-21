@@ -2,7 +2,10 @@ node {
     withCredentials([[$class: 'UsernamePasswordMultiBinding',
         credentialsId: 'dockerhub',
         usernameVariable: 'DOCKER_USER_ID',
-        passwordVariable: 'DOCKER_USER_PASSWORD']]) {
+        passwordVariable: 'DOCKER_USER_PASSWORD'], 
+            [string(credentialsId: 'GCLOUD_PROJECT', variable: 'GCLOUD_PROJECT')],
+            [string(credentialsId: 'SERVICE_ACCOUNT_KEY', variable: 'SERVICE_ACCOUNT_KEY')]
+        ]) {
         stage('Pull') {
             git 'https://github.com/KSU-CS-MICLab/HowAreYouToday-Backend.git'
         }
