@@ -4,6 +4,7 @@ const app = express();
 const post = require('./api/post')
 const comment = require('./api/post/comment')
 const like = require('./api/post/like')
+const login = require('./api/login')
 const mongoose = require('mongoose')
 const cors = require('cors')
 // const firebase = require("firebase-admin");
@@ -14,6 +15,7 @@ app.use(cors())
 app.use('/posts', post);
 app.use('/comments', comment);
 app.use('/likes', like);
+app.use('/login', login);
 app.use(error)
 
 const port = process.env.PORT || 3030;
