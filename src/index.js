@@ -9,7 +9,6 @@ const mongoose = require('mongoose')
 const firebaseAuth = require('./middleware/auth')
 const cors = require('cors')
 const firebase = require("firebase-admin");
-const serviceAccount = require("./serviceAccountKey.json");
 
 app.use(express.json());
 app.use(cors())
@@ -31,6 +30,7 @@ db.once('open', function(){
     console.log("Connected to mongod server")
 })
 
+const serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT_KEY)
 firebase.initializeApp({
     credential: firebase.credential.cert(serviceAccount)
 });

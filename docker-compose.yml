@@ -37,6 +37,8 @@ services:
       - DB=how2day
       - REDIS_PORT=6379
       - REDIS_HOST=redis
+      - SERVICE_ACCOUNT_KEY=${SERVICE_ACCOUNT_KEY}
+      - GCLOUD_PROJECT=${GCLOUD_PROJECT}
     restart: always
     depends_on:
       - mongodb
