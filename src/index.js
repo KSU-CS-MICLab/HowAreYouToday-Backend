@@ -13,12 +13,11 @@ const firebase = require("firebase-admin");
 
 app.use(express.json());
 app.use(cors())
-app.use(firebaseAuth())
-app.use('/posts', post);
-app.use('/comments', comment);
-app.use('/likes', like);
-app.use('/login', login);
-app.use('/calendars', calendar)
+app.use('/posts',  post);
+app.use('/comments', firebaseAuth, comment);
+app.use('/likes', firebaseAuth, like);
+app.use('/login', firebaseAuth, login);
+app.use('/calendars', firebaseAuth, calendar)
 app.use(error)
 
 const port = process.env.PORT || 3030;
