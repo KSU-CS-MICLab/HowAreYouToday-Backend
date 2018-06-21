@@ -13,7 +13,7 @@ const firebase = require("firebase-admin");
 
 app.use(express.json());
 app.use(cors())
-app.use(firebaseAuth)
+app.use(firebaseAuth())
 app.use('/posts', post);
 app.use('/comments', comment);
 app.use('/likes', like);
