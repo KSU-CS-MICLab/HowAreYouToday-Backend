@@ -5,6 +5,7 @@ const post = require('./api/post')
 const comment = require('./api/post/comment')
 const like = require('./api/post/like')
 const login = require('./api/login')
+const calendar = require('./api/calendar')
 const mongoose = require('mongoose')
 const firebaseAuth = require('./middleware/auth')
 const cors = require('cors')
@@ -17,6 +18,7 @@ app.use('/posts', post);
 app.use('/comments', comment);
 app.use('/likes', like);
 app.use('/login', login);
+app.use('/calendars', calendar)
 app.use(error)
 
 const port = process.env.PORT || 3030;
