@@ -14,7 +14,7 @@ const likesUtil = require('../../../utils/likes')
 const asyncMiddleware = require('../../../middleware/async')
 
 const like = asyncMiddleware(async (req, res) => {
-    await likesUtil.like(req.body.type, req.params.likeId, req.body.uid)
+    await likesUtil.like(req.body.type, req.params.likeId, req.user.uid)
 
     // TODO: 이미 있는 경우 처리
     
@@ -26,7 +26,7 @@ const like = asyncMiddleware(async (req, res) => {
 // })
 
 const unLike = asyncMiddleware(async (req, res) => {
-    let ul = await likesUtil.unLike(req.body.type, req.params.likeId, req.body.uid)
+    let ul = await likesUtil.unLike(req.body.type, req.params.likeId, req.user.uid)
 
     console.log(ul) // TODO: 계속 false 값만 나오네..
     ul === 1

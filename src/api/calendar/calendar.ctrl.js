@@ -17,6 +17,7 @@ const create = asyncMiddleware (async (req, res) => {
         }, { new: true })    
     }
     else if(type === "end") {
+
         account = await Account.findOneAndUpdate({ uid: req.user.uid }, {  
             $push: {
                 "calendar.endDate" : req.body.date
@@ -24,6 +25,7 @@ const create = asyncMiddleware (async (req, res) => {
         }, { new: true })
     }
     else if(type === "pills") {
+
         account = await Account.findOneAndUpdate({ uid: req.user.uid }, {  
             $push: {
                 "calendar.pillsDate" : req.body.date
@@ -38,6 +40,7 @@ const destroy = asyncMiddleware (async (req, res) => {
     let type = req.body.type
     let account
     if(type === "begin") {
+
         account = await Account.findOneAndUpdate({ uid: req.user.uid }, {  
             $pull: {
                 "calendar.beginDate" : req.body.date
@@ -45,6 +48,7 @@ const destroy = asyncMiddleware (async (req, res) => {
         }, { new: true })        
     }
     else if(type === "end") {
+
         account = await Account.findOneAndUpdate({ uid: req.user.uid }, {  
             $pull: {
                 "calendar.endDate" : req.body.date
@@ -52,6 +56,7 @@ const destroy = asyncMiddleware (async (req, res) => {
         }, { new: true })
     }
     else if(type === "pills") {
+
         account = await Account.findOneAndUpdate({ uid: req.user.uid }, {  
             $pull: {
                 "calendar.pillsDate" : req.body.date
