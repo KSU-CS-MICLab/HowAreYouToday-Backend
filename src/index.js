@@ -24,14 +24,16 @@ const port = process.env.PORT || 3030;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
 
 const db = mongoose.connection
-mongoose.connect(`mongodb://${process.env.DB_HOST || 'localhost'}:27017/${process.env.DB}`)
+// mongoose.connect(`mongodb://${process.env.DB_HOST || 'localhost'}:27017/${process.env.DB}`)
+mongoose.connect(`mongodb://localhost:27017/test1`)
 db.on('error', console.error)
 db.once('open', function(){
     // CONNECTED TO MONGODB SERVER
     console.log("Connected to mongod server")
 })
 
-const serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT_KEY)
+// const serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT_KEY)
+const serviceAccount = require('../serviceAccountKey.json')
 firebase.initializeApp({
     credential: firebase.credential.cert(serviceAccount)
 });
