@@ -1,7 +1,7 @@
 const { Account, validate } = require('../../models/account')
 const asyncMiddleware = require('../../middleware/async')
 const index = asyncMiddleware (async (req, res) => {
-    const account = await Account.find().where('uid').equals(req.user.uid)
+    const account = await Account.findOne().where('uid').equals(req.user.uid)
     
     res.send(account)
 })
